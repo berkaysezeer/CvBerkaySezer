@@ -22,7 +22,7 @@ namespace CvBerkaySezer.Models
         public string Title { get; set; }
 
         [Column(TypeName = "Varchar")]
-        [StringLength(1024, ErrorMessage = "En fazla 1024 karakter girebilirsiniz")]
+        [StringLength(2000, ErrorMessage = "En fazla 1024 karakter girebilirsiniz")]
         [Required(ErrorMessage = "İçerik alanı boş geçilemez")]
         public string ContentParagrap { get; set; }
 

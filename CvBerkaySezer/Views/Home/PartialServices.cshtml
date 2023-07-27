@@ -1,4 +1,7 @@
-﻿<div class="untree_co-section pb-0" id="services-section">
+﻿@using CvBerkaySezer.Models
+@model List<Service>
+
+<div class="untree_co-section pb-0" id="services-section">
     <div class="container">
         <div class="row mb-4">
             <div class="col-lg-7 text-center mx-auto">
@@ -13,65 +16,19 @@
 
         <div class="row">
 
-            <div class="col-6 col-sm-6 col-md-6 col-lg-4 mb-4">
-                <div class="service text-center">
-                    <div class="gsap-reveal-hero mb-3">
-                        <span class="icon-service"><img src="~/Content/images/svg/service-icon-7.svg" alt="Image" class="img-fluid"></span>
+            @foreach (var service in Model)
+            {
+                <div class="col-6 col-sm-6 col-md-6 col-lg-4 mb-4">
+                    <div class="service text-center">
+                        <div class="gsap-reveal-hero mb-3">
+                            <span class="icon-service"><img src="@service.ImageUrl" alt="Image" class="img-fluid"></span>
+                        </div>
+                        <h3 class="gsap-reveal-hero">@service.Title</h3>
+                        <p class="gsap-reveal-hero">@service.Definition</p>
                     </div>
-                    <h3 class="gsap-reveal-hero">Marketing</h3>
-                    <p class="gsap-reveal-hero">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
                 </div>
-            </div>
-            <div class="col-6 col-sm-6 col-md-6 col-lg-4 mb-4">
-                <div class="service text-center">
-                    <div class="gsap-reveal-hero mb-3">
-                        <span class="icon-service"><img src="~/Content/images/svg/service-icon-6.svg" alt="Image" class="img-fluid"></span>
-                    </div>
-                    <h3 class="gsap-reveal-hero">Photography</h3>
-                    <p class="gsap-reveal-hero">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                </div>
-            </div>
+            }
 
-            <div class="col-6 col-sm-6 col-md-6 col-lg-4 mb-4">
-                <div class="service text-center">
-                    <div class="gsap-reveal-hero mb-3">
-                        <span class="icon-service"><img src="~/Content/images/svg/service-icon-1.svg" alt="Image" class="img-fluid"></span>
-                    </div>
-                    <h3 class="gsap-reveal-hero">Web Design</h3>
-                    <p class="gsap-reveal-hero">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                </div>
-            </div>
-
-
-            <div class="col-6 col-sm-6 col-md-6 col-lg-4 mb-4">
-                <div class="service text-center">
-                    <div class="gsap-reveal-hero mb-3">
-                        <span class="icon-service"><img src="~/Content/images/svg/service-icon-8.svg" alt="Image" class="img-fluid"></span>
-                    </div>
-                    <h3 class="gsap-reveal-hero">App Development</h3>
-                    <p class="gsap-reveal-hero">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                </div>
-            </div>
-
-            <div class="col-6 col-sm-6 col-md-6 col-lg-4 mb-4">
-                <div class="service text-center">
-                    <div class="gsap-reveal-hero mb-3">
-                        <span class="icon-service"><img src="~/Content/images/svg/service-icon-4.svg" alt="Image" class="img-fluid"></span>
-                    </div>
-                    <h3 class="gsap-reveal-hero">Search Ranking</h3>
-                    <p class="gsap-reveal-hero">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                </div>
-            </div>
-
-            <div class="col-6 col-sm-6 col-md-6 col-lg-4 mb-4">
-                <div class="service text-center">
-                    <div class="gsap-reveal-hero mb-3">
-                        <span class="icon-service"><img src="~/Content/images/svg/service-icon-5.svg" alt="Image" class="img-fluid"></span>
-                    </div>
-                    <h3 class="gsap-reveal-hero">Branding</h3>
-                    <p class="gsap-reveal-hero">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                </div>
-            </div>
 
         </div>
     </div>

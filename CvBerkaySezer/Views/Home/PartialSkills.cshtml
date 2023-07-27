@@ -1,4 +1,7 @@
-﻿<div class="untree_co-section pb-0">
+﻿@using CvBerkaySezer.Models
+@model List<Skill>
+
+<div class="untree_co-section pb-0">
     <div class="container">
         <div class="row mb-4">
             <div class="col-lg-7 text-center mx-auto">
@@ -11,39 +14,18 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-6 col-sm-6 col-md-6 col-lg-3 text-center" data-aos="fade-up" data-aos-delay="0">
-                <div class="progressbar" data-animate="false">
-                    <div class="circle" data-percent="98">
-                        <div class="number"></div>
-                        <p class="caption">WordPress</p>
+            @foreach (var skill in Model)
+            {
+                <div class="col-6 col-sm-6 col-md-6 col-lg-3 text-center" data-aos="fade-up" data-aos-delay="0">
+                    <div class="progressbar" data-animate="false">
+                        <div class="circle" data-percent="@skill.Rate">
+                            <div class="number"></div>
+                            <p class="caption">@skill.Title</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-6 col-sm-6 col-md-6 col-lg-3 text-center" data-aos="fade-up" data-aos-delay="100">
-                <div class="progressbar" data-animate="false">
-                    <div class="circle" data-percent="95">
-                        <div class="number"></div>
-                        <p class="caption">Web Design</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-sm-6 col-md-6 col-lg-3 text-center" data-aos="fade-up" data-aos-delay="200">
-                <div class="progressbar" data-animate="false">
-                    <div class="circle" data-percent="89">
-                        <div class="number"></div>
-                        <p class="caption">Web/Mobile App</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-sm-6 col-md-6 col-lg-3 text-center" data-aos="fade-up" data-aos-delay="300">
-                <div class="progressbar" data-animate="false">
-                    <div class="circle" data-percent="85">
-                        <div class="number"></div>
-                        <p class="caption">Photoshop</p>
-                    </div>
-                </div>
+            }
 
-            </div>
         </div>
     </div>
 </div>

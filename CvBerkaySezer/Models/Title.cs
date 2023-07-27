@@ -13,12 +13,12 @@ namespace CvBerkaySezer.Models
         public int Id { get; set; }
 
         [Column(TypeName = "Varchar")]
-        [StringLength(15, ErrorMessage = "En fazla 15 karakter girebilirsiniz")]
+        [StringLength(100, ErrorMessage = "En fazla 15 karakter girebilirsiniz")]
         [Required(ErrorMessage = "Başlık alanı boş geçilemez")]
         public string Head { get; set; }
 
         [Column(TypeName = "Varchar")]
-        [StringLength(256, ErrorMessage = "En fazla 256 karakter girebilirsiniz")]
+        [StringLength(500, ErrorMessage = "En fazla 256 karakter girebilirsiniz")]
         [Required(ErrorMessage = "İçerik alanı boş geçilemez")]
         public string Content { get; set; }
 

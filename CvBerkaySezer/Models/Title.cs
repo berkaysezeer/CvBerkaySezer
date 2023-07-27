@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace CvBerkaySezer.Models
 {
@@ -12,11 +13,13 @@ namespace CvBerkaySezer.Models
     {
         public int Id { get; set; }
 
+        [AllowHtml]
         [Column(TypeName = "Varchar")]
         [StringLength(100, ErrorMessage = "En fazla 15 karakter girebilirsiniz")]
         [Required(ErrorMessage = "Başlık alanı boş geçilemez")]
         public string Head { get; set; }
 
+        [AllowHtml]
         [Column(TypeName = "Varchar")]
         [StringLength(500, ErrorMessage = "En fazla 256 karakter girebilirsiniz")]
         [Required(ErrorMessage = "İçerik alanı boş geçilemez")]

@@ -33,5 +33,12 @@ namespace CvBerkaySezer.Areas.Admin.Controllers
 
             return View();
         }
+
+        public ActionResult Out()
+        {
+            FormsAuthentication.SignOut();
+            Session.Abandon();
+            return RedirectToAction("Index");
+        }
     }
 }

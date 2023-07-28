@@ -19,10 +19,13 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-3">
+                @Html.Action("MessageMenu", "Message")
+            </div>
+            <div class="col-md-9">
                 <div class="card">
                     <div class="card-body">
-                        <table id="tblUnreadMessages" class="table table-bordered table-striped">
+                        <table id="tblMessages" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th>Ad Soyad</th>
@@ -51,7 +54,15 @@
                                                 <span class="badge badge-primary">Okunmadı</span>
                                             }
                                         </td>
-                                        <td><a href="/Admin/Message/Detail/@message.Id" class="btn btn-outline-primary btn-sm" target="_blank">Detay</a></td>
+                                        <td>
+                                            <a href="/Admin/Message/Detail/@message.Id" class="btn btn-outline-primary btn-sm" target="_blank">Detay</a>
+
+                                            @if (Request.QueryString["f"] != "copkutusu")
+                                            {
+                                                <a href="#" class="btn btn-outline-danger btn-sm btnMesajSil" data-messageid="@message.Id" data-konu="@message.Subject">Sil</a>
+                                            }
+
+                                        </td>
                                     </tr>
                                 }
                             </tbody>
@@ -64,10 +75,50 @@
     </div>
 </div>
 
+<div class="modal fade" id="modalMesajSil" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Uyarı! Mesaj Sililecek</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="modalKonu"></p>
+            </div>
+            <div class="modal-footer">
+                @using (Html.BeginForm("Delete", "Message", FormMethod.Post))
+                {
+                    @Html.Hidden("Id")
+                    <button type="submit" class="btn btn-primary">Onay</button>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="~/Areas/Admin/Content/plugins/jquery/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $(document).on("click", ".btnMesajSil", OpenSilModal);
+    });
+
+    function OpenSilModal() {
+        var mesajId = $(this).data("messageid");
+        var mesajKonu = $(this).data("konu");
+
+        $('.modalKonu').html(mesajKonu + ' konulu mesaj silinecek. Onaylıyor musunuz?');
+        $('#Id').val(mesajId)
+        $("#modalMesajSil").modal();
+    }
+</script>
+
 <script>
     $(function () {
-        $("#tblUnreadMessages").DataTable({
+        $("#tblMessages").DataTable({
             order: [[3, 'desc']],
             "paging": true,
             "lengthChange": false,
@@ -82,3 +133,25 @@
         });
 
     });</script>
+
+@if (TempData["ContactMessage"] != null)
+{
+    <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                icon: '@TempData["ContactType"]',
+                title: '@TempData["ContactMessage"]'
+            })
+    </script>
+}

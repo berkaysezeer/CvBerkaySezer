@@ -37,5 +37,6 @@ namespace CvBerkaySezer.Models
         public string Message { get; set; }
         public DateTime Time { get; set; }
         public bool IsRead { get; set; } = false;
+        public bool IsDelete { get; set; } = false;
     }
 }

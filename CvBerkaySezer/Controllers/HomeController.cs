@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace CvBerkaySezer.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         public ActionResult Index()

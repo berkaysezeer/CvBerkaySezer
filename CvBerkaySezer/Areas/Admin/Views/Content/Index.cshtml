@@ -1,0 +1,137 @@
+﻿@using CvBerkaySezer.Models
+@model Content
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content-header">
+
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">İçerik</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Admin</a></li>
+                    <li class="breadcrumb-item active">İçerik</li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <!-- Profile Image -->
+                <div class="card card-primary card-outline">
+                    <div class="card-body box-profile">
+                        <div class="text-center">
+                            <img class="profile-user-img img-fluid img-circle"
+                                 src="@Model.ImageUrl"
+                                 alt="User profile picture">
+                        </div>
+                        <h3 class="profile-username text-center">@Model.Fullname</h3>
+                        <p class="text-muted text-center">@Model.Title</p>
+
+                    </div>
+                </div>
+            </div>
+            <!-- /.col -->
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header p-2">
+                        <ul class="nav nav-pills">
+                            <li class="nav-item"><a class="nav-link active" href="#settings" data-toggle="tab">Bilgileri Düzenle</a></li>
+                        </ul>
+                    </div><!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="settings">
+                                @using (Html.BeginForm("Index", "Content", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
+                                {
+                                    @Html.HiddenFor(x => x.Id)
+                                    <div class="form-group row">
+                                        @Html.LabelFor(x => x.Fullname, "Ad Soyad", new { @class = "col-sm-2 col-form-label" })
+                                        <div class="col-sm-10">
+                                            @Html.TextBoxFor(x => x.Fullname, "", new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(x => x.Fullname, "", new { @class = "small", @style = "color:red;" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        @Html.LabelFor(x => x.Title, "Başlık", new { @class = "col-sm-2 col-form-label" })
+                                        <div class="col-sm-10">
+                                            @Html.TextBoxFor(x => x.Title, "", new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(x => x.Title, "", new { @class = "small", @style = "color:red;" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        @Html.LabelFor(x => x.ContentParagrap, "İçerik", new { @class = "col-sm-2 col-form-label" })
+                                        <div class="col-sm-10">
+                                            @Html.TextAreaFor(x => x.ContentParagrap, new { @class = "form-control", @rows = "10" })
+                                            @Html.ValidationMessageFor(x => x.ContentParagrap, "", new { @class = "small", @style = "color:red;" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        @Html.LabelFor(x => x.ImageUrl, "Görsel", new { @class = "col-sm-2 col-form-label" })
+                                        <div class="col-sm-10">
+                                            <div class="input-group">
+                                                <div class="custom-file">
+                                                    <input type="file" accept=".jpg,.jpeg,.png" class="custom-file-input" id="ImageUrl" name="ImageUrl">
+                                                    <label class="custom-file-label" for="ImageUrl">Görsel Seç</label>
+                                                </div>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text" id="">Yükle</span>
+                                                </div>
+                                            </div>
+                                            @Html.ValidationMessageFor(x => x.ImageUrl, "", new { @class = "small", @style = "color:red;" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="offset-sm-2 col-sm-10">
+                                            <button type="submit" class="btn btn-primary">Kaydet</button>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            <!-- /.tab-pane -->
+                        </div>
+                        <!-- /.tab-content -->
+                    </div><!-- /.card-body -->
+                </div>
+                <!-- /.nav-tabs-custom -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+
+<script src="~/Areas/Admin/Content/plugins/jquery/jquery.min.js"></script>
+@*https://stackoverflow.com/questions/48613992/bootstrap-4-file-input-doesnt-show-the-file-name*@
+<script>
+    $('#ImageUrl').on('change', function () {
+        var fileName = $(this).val();
+        var cleanFileName = fileName.replace('C:\\fakepath\\', " ");
+        $(this).next('.custom-file-label').html(cleanFileName);
+    })
+</script>
+@if (TempData["Message"] != null && TempData["Type"].ToString() == "success")
+{
+    <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                icon: '@TempData["Type"]',
+                title: '@TempData["Message"]'
+            })
+    </script>
+}

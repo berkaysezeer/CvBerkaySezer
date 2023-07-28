@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace CvBerkaySezer.Models
 {
@@ -21,6 +22,7 @@ namespace CvBerkaySezer.Models
         [Required(ErrorMessage = "Başlık alanı boş geçilemez")]
         public string Title { get; set; }
 
+        [AllowHtml]
         [Column(TypeName = "Varchar")]
         [StringLength(2000, ErrorMessage = "En fazla 1024 karakter girebilirsiniz")]
         [Required(ErrorMessage = "İçerik alanı boş geçilemez")]
@@ -28,7 +30,6 @@ namespace CvBerkaySezer.Models
 
         [Column(TypeName = "Varchar")]
         [StringLength(256)]
-        [Required(ErrorMessage = "Görsel alanı boş geçilemez")]
         public string ImageUrl { get; set; }
     }
 }

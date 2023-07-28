@@ -120,8 +120,19 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\ContentController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MessageController.cs" />
+    <Compile Include="Areas\Admin\Controllers\NavbarMessageController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ServiceController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SkillController.cs" />
     <Compile Include="Areas\Admin\Controllers\TitleController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserController.cs" />
+    <Compile Include="Areas\Admin\Functions\DataSecurity.cs" />
+    <Compile Include="Areas\Admin\Functions\SaveImage.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ServiceViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\SkillViewModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -134,6 +145,7 @@
     <Compile Include="Models\Service.cs" />
     <Compile Include="Models\Skill.cs" />
     <Compile Include="Models\Title.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ContactRepository.cs" />
     <Compile Include="Repositories\ContentRepository.cs" />
@@ -142,6 +154,7 @@
     <Compile Include="Repositories\ServiceRepository.cs" />
     <Compile Include="Repositories\SkillRepository.cs" />
     <Compile Include="Repositories\TitleRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Content\.gitignore" />
@@ -298,6 +311,8 @@
     <Content Include="Areas\Admin\Content\docs\_layouts\home.html" />
     <Content Include="Areas\Admin\Content\docs\_layouts\page.html" />
     <Content Include="Areas\Admin\Content\docs\_layouts\post.html" />
+    <Content Include="Areas\Admin\Content\Icons\bs.png" />
+    <Content Include="Areas\Admin\Content\Icons\chat.png" />
     <Content Include="Areas\Admin\Content\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.css" />
     <Content Include="Areas\Admin\Content\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.min.css" />
     <Content Include="Areas\Admin\Content\plugins\bootstrap-colorpicker\js\bootstrap-colorpicker.js" />
@@ -2329,6 +2344,15 @@
     <Content Include="Areas\Admin\Content\README.md" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Title\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Content\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Service\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Skill\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_SidebarPartial.cshtml" />
+    <Content Include="Areas\Admin\Views\NavbarMessage\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Message\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Message\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\Login\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Index.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
@@ -2360,9 +2384,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Content\Images\Service\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Funtions\" />
     <Folder Include="Views\Title\" />
+    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

@@ -22,6 +22,11 @@ namespace CvBerkaySezer.Models
         public string Surname { get; set; }
 
         [Column(TypeName = "Varchar")]
+        [StringLength(100, ErrorMessage = "En fazla 100 karakter girebilirsiniz")]
+        [Required(ErrorMessage = "Konu alanı boş geçilemez")]
+        public string Subject { get; set; }
+
+        [Column(TypeName = "Varchar")]
         [StringLength(50, ErrorMessage = "En fazla 50 karakter girebilirsiniz")]
         [Required(ErrorMessage = "E-mail alanı boş geçilemez")]
         public string Email { get; set; }

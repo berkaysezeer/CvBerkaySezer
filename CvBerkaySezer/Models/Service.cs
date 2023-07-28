@@ -17,13 +17,12 @@ namespace CvBerkaySezer.Models
         public string Title { get; set; }
 
         [Column(TypeName = "Varchar")]
-        [StringLength(200, ErrorMessage = "En fazla 50 karakter girebilirsiniz")]
+        [StringLength(500, ErrorMessage = "En fazla 500 karakter girebilirsiniz")]
         [Required(ErrorMessage = "Açıklama alanı boş geçilemez")]
         public string Definition { get; set; }
 
         [Column(TypeName = "Varchar")]
         [StringLength(256)]
-        [Required(ErrorMessage = "Görsel alanı boş geçilemez")]
         public string ImageUrl { get; set; }
 
         public bool IsDeleted { get; set; } = false;

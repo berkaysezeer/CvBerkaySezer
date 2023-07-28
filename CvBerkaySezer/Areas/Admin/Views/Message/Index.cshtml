@@ -1,0 +1,84 @@
+﻿@using CvBerkaySezer.Models
+@model List<Contact>
+@{
+    ViewBag.Title = "Mesajlar";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Mesajlar</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Admin</a></li>
+                    <li class="breadcrumb-item active">Mesajlar</li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table id="tblUnreadMessages" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Ad Soyad</th>
+                                    <th>E-posta</th>
+                                    <th>İçerik</th>
+                                    <th>Tarih</th>
+                                    <th>Durum</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var message in Model)
+                                {
+                                    <tr>
+                                        <td>@message.Name @message.Surname</td>
+                                        <td>@message.Email</td>
+                                        <td>@(message.Message.Length > 50 ? message.Message.Substring(0,47) + "..." : message.Message)</td>
+                                        <td>@message.Time.ToString("dd.MM.yyyy HH:mm")</td>
+                                        <td>
+                                            @if (message.IsRead)
+                                            {
+                                                <span class="badge badge-secondary">Okundu</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-primary">Okunmadı</span>
+                                            }
+                                        </td>
+                                        <td><a href="/Admin/Message/Detail/@message.Id" class="btn btn-outline-primary btn-sm" target="_blank">Detay</a></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Areas/Admin/Content/plugins/jquery/jquery.min.js"></script>
+<script>
+    $(function () {
+        $("#tblUnreadMessages").DataTable({
+            order: [[3, 'desc']],
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
+            }
+        });
+
+    });</script>

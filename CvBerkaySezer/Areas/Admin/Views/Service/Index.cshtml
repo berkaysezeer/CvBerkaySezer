@@ -1,0 +1,278 @@
+﻿@using CvBerkaySezer.Models
+@model List<Service>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">İçerik</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Admin</a></li>
+                    <li class="breadcrumb-item active">Hizmetler</li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table id="tblServices" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Başlık</th>
+                                    <th>Açıklama</th>
+                                    <th>Görsel</th>
+                                    <th>Durum</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var service in Model)
+                                {
+                                    <tr>
+                                        <td>@service.Title</td>
+                                        <td>@service.Definition</td>
+                                        <td>
+                                            <img width="35" height="35" src="@service.ImageUrl" />
+                                        </td>
+                                        <td>
+                                            @if (service.IsDeleted)
+                                            {
+                                                <span class="badge badge-danger">Silindi</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-success">Aktif</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            <a href="#" class="btn btn-outline-primary btn-sm btnHizmetDuzenle" data-hizmetid="@service.Id" data-baslik=" @service.Title" data-aciklama="@service.Definition" data-sil="@service.IsDeleted">Düzenle</a>
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <a href="#" class="btn btn-primary" id="btnHizmetEkle">Hizmet Ekle</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Areas/Admin/Content/plugins/jquery/jquery.min.js"></script>
+<script>
+    $(function () {
+        $("#tblServices").DataTable({
+            order: [[3, 'asc']],
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
+            }
+        });
+
+    });</script>
+
+<script>
+    $(document).ready(function () {
+        $(document).on("click", ".btnHizmetDuzenle", OpenDuzenleModal);
+        $(document).on("click", "#btnHizmetEkle", OpenEkleModal);
+    });
+
+    function OpenEkleModal() {
+        $("#modalHizmetEkle").modal();
+    }
+
+    function OpenDuzenleModal() {
+        var hizmetId = $(this).data("hizmetid");
+        var hizmetBaslik = $(this).data("baslik");
+        var hizmetAciklama = $(this).data("aciklama");
+        var hizmetSil = $(this).data("sil");
+
+        if (hizmetSil == "True") {
+            $('#IsDeleted').prop('checked', true);
+        } else {
+            $('#IsDeleted').prop('checked', false);
+        }
+
+        $('#Id').val(hizmetId);
+        $('#Title').val(hizmetBaslik);
+        $('#Definition').val(hizmetAciklama);
+
+        $("#modalHizmetDuzenle").modal();
+    }
+
+</script>
+
+<div class="modal fade" id="modalHizmetEkle" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Hizmet Ekle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        @using (Html.BeginForm("Add", "Service", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    @Html.Label("AddTitle", "Başlık", new { @class = "small mb-1" })
+                                    @Html.TextBox("AddTitle", "", new { @class = "form-control py-3" })
+                                    @Html.ValidationMessage("AddTitle", "", new { @class = "small", @style = "color:red" })
+                                </div>
+                                <div class="form-group col-md-12">
+                                    @Html.Label("AddDefinition", "Açıklama", new { @class = "small mb-1" })
+                                    @Html.TextArea("AddDefinition", "", new { @class = "form-control py-3", @rows = "4" })
+                                    @Html.ValidationMessage("AddDefinition", "", new { @class = "small", @style = "color:red" })
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" accept=".jpg,.jpeg,.png,.svg" class="custom-file-input" id="AddImageUrl" name="AddImageUrl">
+                                            <label class="custom-file-label" for="AddImageUrl">Görsel Seç</label>
+                                        </div>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="">Yükle</span>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessage("AddImageUrl", "", new { @class = "small", @style = "color:red;" })
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-12">
+                                    <div class="form-group mt-4 mb-0">
+                                        <button class="btn btn-primary btn-block" type="submit">Kaydet</button>
+                                    </div>
+                                </div>
+                            </div>}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalHizmetDuzenle" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Hizmet Düzenle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        @using (Html.BeginForm("Edit", "Service", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            @Html.Hidden("Id")
+
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    @Html.Label("Title", "Başlık", new { @class = "small mb-1" })
+                                    @Html.TextBox("Title", "", new { @class = "form-control py-3" })
+                                    @Html.ValidationMessage("Title", "", new { @class = "small", @style = "color:red" })
+                                </div>
+                                <div class="form-group col-md-12">
+                                    @Html.Label("Definition", "Açıklama", new { @class = "small mb-1" })
+                                    @Html.TextArea("Definition", "", new { @class = "form-control py-3", @rows = "4" })
+                                    @Html.ValidationMessage("Definition", "", new { @class = "small", @style = "color:red" })
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" accept=".jpg,.jpeg,.png,.svg" class="custom-file-input" id="ImageUrl" name="ImageUrl">
+                                            <label class="custom-file-label" for="ImageUrl">Görsel Seç</label>
+                                        </div>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="">Yükle</span>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessage("ImageUrl", "", new { @class = "small", @style = "color:red;" })
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("IsDeleted", new { @class = "custom-control-input" })
+                                        @Html.Label("IsDeleted", "Sil", new { @class = "custom-control-label" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-12">
+                                    <div class="form-group mt-4 mb-0">
+                                        <button class="btn btn-primary btn-block" type="submit">Kaydet</button>
+                                    </div>
+                                </div>
+                            </div>}
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#ImageUrl').on('change', function () {
+        var fileName = $(this).val();
+        var cleanFileName = fileName.replace('C:\\fakepath\\', " ");
+        $(this).next('.custom-file-label').html(cleanFileName);
+    })
+
+    $('#AddImageUrl').on('change', function () {
+        var fileName = $(this).val();
+        var cleanFileName = fileName.replace('C:\\fakepath\\', " ");
+        $(this).next('.custom-file-label').html(cleanFileName);
+    })
+</script>
+@if (TempData["ServiceMessage"] != null)
+{
+    <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                icon: '@TempData["ServiceType"]',
+                title: '@TempData["ServiceMessage"]'
+            })
+    </script>
+}

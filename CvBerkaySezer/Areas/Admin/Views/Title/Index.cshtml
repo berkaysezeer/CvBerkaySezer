@@ -22,7 +22,7 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-body p-0">
-                        <table class="table">
+                        <table id="tblTitle" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th>Başlık</th>
@@ -57,7 +57,7 @@
                     </div>
                     @using (Html.BeginForm("Index", "Title", FormMethod.Post))
                     {
-                        @Html.HiddenFor(x=>x.Id)
+                        @Html.HiddenFor(x => x.Id)
                         <div class="card-body">
                             <div class="form-group">
                                 @Html.LabelFor(x => x.Head, "Başlık", new { @class = "" })
@@ -88,3 +88,20 @@
 </div>
 
 
+<script src="~/Areas/Admin/Content/plugins/jquery/jquery.min.js"></script>
+<script>
+    $(function () {
+        $("#tblTitle").DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
+            }
+        });
+
+    });</script>

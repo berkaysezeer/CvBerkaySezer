@@ -17,5 +17,57 @@
                 </ol>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-primary">
+                    <div class="inner">
+                        <h3>@ViewBag.Service</h3>
+                        <p>Hizmetler</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa-solid fa-store"></i>
+                    </div>
+                    <a href="/Admin/Service" class="small-box-footer">Daha Fazla Bilgi <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-primary">
+                    <div class="inner">
+                        <h3>@ViewBag.Skill</h3>
+                        <p>Yetenekler</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa-solid fa-bars-progress"></i>
+                    </div>
+                    <a href="/Admin/Skill" class="small-box-footer">Daha Fazla Bilgi <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-primary">
+                    <div class="inner">
+                        <h3>@ViewBag.Project</h3>
+                        <p>Projeler</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa-solid fa-hand-holding-hand"></i>
+                    </div>
+                    <a href="/Admin/Project" class="small-box-footer">Daha Fazla Bilgi <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box @(Convert.ToInt32(ViewBag.Message) > 0 ? "bg-success" : "") ">
+                    <div class="inner">
+                        <h3>@ViewBag.Message</h3>
+                        <p>Okunmamış Mesajlar</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa-solid fa-message"></i>
+                    </div>
+                    <a href="/Admin/Message" class="small-box-footer">Daha Fazla Bilgi <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>

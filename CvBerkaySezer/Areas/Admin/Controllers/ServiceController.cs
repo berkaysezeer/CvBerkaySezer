@@ -52,7 +52,7 @@ namespace CvBerkaySezer.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Add(AddServiceModel s)
+        public ActionResult Add(AddServiceViewModel s)
         {
             if (ModelState.IsValid)
             {

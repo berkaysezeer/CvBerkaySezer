@@ -125,14 +125,17 @@
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\MessageController.cs" />
     <Compile Include="Areas\Admin\Controllers\NavbarMessageController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ProjectController.cs" />
     <Compile Include="Areas\Admin\Controllers\ServiceController.cs" />
     <Compile Include="Areas\Admin\Controllers\SkillController.cs" />
     <Compile Include="Areas\Admin\Controllers\TitleController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Areas\Admin\Functions\DataSecurity.cs" />
     <Compile Include="Areas\Admin\Functions\SaveImage.cs" />
-    <Compile Include="Areas\Admin\ViewModels\ServiceViewModel.cs" />
-    <Compile Include="Areas\Admin\ViewModels\SkillViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\AddProjectViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\AddSkillViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\AddServiceViewModel.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1992,6 +1995,7 @@
     <Content Include="Content\css\style.css" />
     <Content Include="Content\css\_mixins.css" />
     <Content Include="Content\css\_site-blocks.css" />
+    <Content Include="Content\ErrorPage\css\style.css" />
     <Content Include="Content\fonts\flaticon\backup.txt" />
     <Content Include="Content\fonts\flaticon\font\flaticon.css" />
     <Content Include="Content\fonts\flaticon\font\flaticon.html" />
@@ -2459,6 +2463,7 @@
     <Content Include="Areas\Admin\Content\Login\vendor\bootstrap\css\bootstrap-reboot.min.css.map" />
     <Content Include="Areas\Admin\Content\Login\vendor\bootstrap\css\bootstrap.css.map" />
     <Content Include="Areas\Admin\Content\Login\vendor\bootstrap\css\bootstrap.min.css.map" />
+    <Content Include="Areas\Admin\Views\Project\Index.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
@@ -2487,10 +2492,10 @@
     <Content Include="Views\Home\PartialServices.cshtml" />
     <Content Include="Views\Home\PartialSkills.cshtml" />
     <Content Include="Views\Home\PartialContact.cshtml" />
+    <Content Include="Views\Error\Hata.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Content\Images\Service\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Funtions\" />
     <Folder Include="Views\Title\" />

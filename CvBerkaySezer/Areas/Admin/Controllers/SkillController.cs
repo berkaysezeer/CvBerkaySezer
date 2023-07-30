@@ -1,4 +1,5 @@
 ﻿using CvBerkaySezer.Areas.Admin.Functions;
+using CvBerkaySezer.Areas.Admin.ViewModels;
 using CvBerkaySezer.Models;
 using CvBerkaySezer.Repositories;
 using System;
@@ -6,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using static CvBerkaySezer.Areas.Admin.ViewModels.SkillViewModel;
 
 namespace CvBerkaySezer.Areas.Admin.Controllers
 {
@@ -23,13 +23,13 @@ namespace CvBerkaySezer.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Edit(Skill s)
         {
-            var service = db.Find(x => x.Id == s.Id);
+            var skill = db.Find(x => x.Id == s.Id);
 
             if (ModelState.IsValid)
             {
-                service.IsDeleted = s.IsDeleted;
-                service.Title = s.Title.Trim();
-                service.Rate = s.Rate;
+                skill.IsDeleted = s.IsDeleted;
+                skill.Title = s.Title.Trim();
+                skill.Rate = s.Rate;
                 db.Update();
 
                 TempData["SkillMessage"] = "Yetenek başarıyla düzenlendi";
@@ -46,7 +46,7 @@ namespace CvBerkaySezer.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Add(AddServiceModel s)
+        public ActionResult Add(AddSkillViewModel s)
         {
             if (ModelState.IsValid)
             {

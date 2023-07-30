@@ -140,7 +140,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     @Html.Label("AddTitle", "Başlık", new { @class = "small mb-1" })
-                                    @Html.TextBox("AddTitle", "", new { @class = "form-control py-3" })
+                                    @Html.TextBox("AddTitle", "", new { @class = "form-control py-3", @maxlength = "50" })
                                     @Html.ValidationMessage("AddTitle", "", new { @class = "small", @style = "color:red" })
                                 </div>
                                 <div class="form-group col-md-12">
@@ -182,7 +182,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     @Html.Label("Title", "Başlık", new { @class = "small mb-1" })
-                                    @Html.TextBox("Title", "", new { @class = "form-control py-3" })
+                                    @Html.TextBox("Title", "", new { @class = "form-control py-3", @maxlength = "50" })
                                     @Html.ValidationMessage("Title", "", new { @class = "small", @style = "color:red" })
                                 </div>
                                 <div class="form-group col-md-12">

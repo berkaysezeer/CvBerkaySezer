@@ -1,5 +1,5 @@
 ﻿@using CvBerkaySezer.Models
-@model List<Service>
+@model List<Project>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
@@ -9,12 +9,12 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Hizmetler</h1>
+                <h1 class="m-0 text-dark">Projeler</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Admin</a></li>
-                    <li class="breadcrumb-item active">Hizmetler</li>
+                    <li class="breadcrumb-item active">Projeler</li>
                 </ol>
             </div>
         </div>
@@ -22,27 +22,29 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <table id="tblServices" class="table table-bordered table-striped">
+                        <table id="tblProjects" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th>Başlık</th>
-                                    <th>Açıklama</th>
+                                    <th>Etiketler</th>
+                                    <th>Url</th>
                                     <th>Görsel</th>
                                     <th>Durum</th>
                                     <th>İşlemler</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var service in Model)
+                                @foreach (var project in Model)
                                 {
                                     <tr>
-                                        <td>@service.Title</td>
-                                        <td>@service.Definition</td>
+                                        <td>@project.Title</td>
+                                        <td>@project.Tag</td>
+                                        <td>@project.ProjectUrl</td>
                                         <td>
-                                            <img width="35" height="35" src="@service.ImageUrl" />
+                                            <img width="50" height="50" src="@project.ImageUrl" />
                                         </td>
                                         <td>
-                                            @if (service.IsDeleted)
+                                            @if (project.IsDeleted)
                                             {
                                                 <span class="badge badge-danger">Silindi</span>
                                             }
@@ -52,7 +54,7 @@
                                             }
                                         </td>
                                         <td>
-                                            <a href="#" class="btn btn-outline-primary btn-sm btnHizmetDuzenle" data-hizmetid="@service.Id" data-baslik=" @service.Title" data-aciklama="@service.Definition" data-sil="@service.IsDeleted">Düzenle</a>
+                                            <a href="#" class="btn btn-outline-primary btn-sm btnProjeDuzenle" data-projeid="@project.Id" data-baslik=" @project.Title" data-tag="@project.Tag" data-sil="@project.IsDeleted" data-url="@project.ProjectUrl">Düzenle</a>
                                         </td>
                                     </tr>
                                 }
@@ -66,7 +68,7 @@
         </div>
         <div class="row">
             <div class="col-md-4">
-                <a href="#" class="btn btn-primary" id="btnHizmetEkle">Hizmet Ekle</a>
+                <a href="#" class="btn btn-primary" id="btnProjeEkle">Proje Ekle</a>
             </div>
         </div>
     </div>
@@ -75,8 +77,8 @@
 <script src="~/Areas/Admin/Content/plugins/jquery/jquery.min.js"></script>
 <script>
     $(function () {
-        $("#tblServices").DataTable({
-            order: [[3, 'asc']],
+        $("#tblProjects").DataTable({
+            order: [[4, 'asc']],
             "paging": true,
             "lengthChange": false,
             "searching": false,
@@ -93,40 +95,42 @@
 
 <script>
     $(document).ready(function () {
-        $(document).on("click", ".btnHizmetDuzenle", OpenDuzenleModal);
-        $(document).on("click", "#btnHizmetEkle", OpenEkleModal);
+        $(document).on("click", ".btnProjeDuzenle", OpenDuzenleModal);
+        $(document).on("click", "#btnProjeEkle", OpenEkleModal);
     });
 
     function OpenEkleModal() {
-        $("#modalHizmetEkle").modal();
+        $("#modalProjeEkle").modal();
     }
 
     function OpenDuzenleModal() {
-        var hizmetId = $(this).data("hizmetid");
-        var hizmetBaslik = $(this).data("baslik");
-        var hizmetAciklama = $(this).data("aciklama");
-        var hizmetSil = $(this).data("sil");
+        var projeId = $(this).data("projeid");
+        var projeBaslik = $(this).data("baslik");
+        var projeUrl = $(this).data("url");
+        var projeTag = $(this).data("tag");
+        var ProjeSil = $(this).data("sil");
 
-        if (hizmetSil == "True") {
+        if (ProjeSil == "True") {
             $('#IsDeleted').prop('checked', true);
         } else {
             $('#IsDeleted').prop('checked', false);
         }
 
-        $('#Id').val(hizmetId);
-        $('#Title').val(hizmetBaslik);
-        $('#Definition').val(hizmetAciklama);
+        $('#Id').val(projeId);
+        $('#Title').val(projeBaslik);
+        $('#Tag').val(projeTag);
+        $('#ProjectUrl').val(projeUrl);
 
-        $("#modalHizmetDuzenle").modal();
+        $("#modalProjeDuzenle").modal();
     }
 
 </script>
 
-<div class="modal fade" id="modalHizmetEkle" role="dialog" aria-hidden="true">
+<div class="modal fade" id="modalProjeEkle" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Hizmet Ekle</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Proje Ekle</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -134,7 +138,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        @using (Html.BeginForm("Add", "Service", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        @using (Html.BeginForm("Add", "Project", FormMethod.Post, new { enctype = "multipart/form-data" }))
                         {
                             <div class="form-row">
                                 <div class="form-group col-md-12">
@@ -143,9 +147,14 @@
                                     @Html.ValidationMessage("AddTitle", "", new { @class = "small", @style = "color:red" })
                                 </div>
                                 <div class="form-group col-md-12">
-                                    @Html.Label("AddDefinition", "Açıklama", new { @class = "small mb-1" })
-                                    @Html.TextArea("AddDefinition", "", new { @class = "form-control py-3", @rows = "4", @maxlength = "500" })
-                                    @Html.ValidationMessage("AddDefinition", "", new { @class = "small", @style = "color:red" })
+                                    @Html.Label("AddProjectUrl", "Url", new { @class = "small mb-1" })
+                                    @Html.TextBox("AddProjectUrl", "", new { @class = "form-control py-3", @maxlength = "256" })
+                                    @Html.ValidationMessage("AddProjectUrl", "", new { @class = "small", @style = "color:red" })
+                                </div>
+                                <div class="form-group col-md-12">
+                                    @Html.Label("AddTag", "Etiketler", new { @class = "small mb-1" })
+                                    @Html.TextArea("AddTag", "", new { @class = "form-control py-3", @rows = "4", @maxlength = "100" })
+                                    @Html.ValidationMessage("AddTag", "", new { @class = "small", @style = "color:red" })
                                 </div>
                             </div>
                             <div class="form-row">
@@ -176,11 +185,11 @@
     </div>
 </div>
 
-<div class="modal fade" id="modalHizmetDuzenle" role="dialog" aria-hidden="true">
+<div class="modal fade" id="modalProjeDuzenle" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Hizmet Düzenle</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Proje Düzenle</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -188,7 +197,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        @using (Html.BeginForm("Edit", "Service", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        @using (Html.BeginForm("Edit", "Project", FormMethod.Post, new { enctype = "multipart/form-data" }))
                         {
                             @Html.Hidden("Id")
 
@@ -199,9 +208,14 @@
                                     @Html.ValidationMessage("Title", "", new { @class = "small", @style = "color:red" })
                                 </div>
                                 <div class="form-group col-md-12">
-                                    @Html.Label("Definition", "Açıklama", new { @class = "small mb-1" })
-                                    @Html.TextArea("Definition", "", new { @class = "form-control py-3", @rows = "4", @maxlength = "500" })
-                                    @Html.ValidationMessage("Definition", "", new { @class = "small", @style = "color:red" })
+                                    @Html.Label("ProjectUrl", "Url", new { @class = "small mb-1" })
+                                    @Html.TextBox("ProjectUrl", "", new { @class = "form-control py-3", @maxlength = "256" })
+                                    @Html.ValidationMessage("ProjectUrl", "", new { @class = "small", @style = "color:red" })
+                                </div>
+                                <div class="form-group col-md-12">
+                                    @Html.Label("Tag", "Etiketler", new { @class = "small mb-1" })
+                                    @Html.TextArea("Tag", "", new { @class = "form-control py-3", @rows = "4", @maxlength = "100" })
+                                    @Html.ValidationMessage("Tag", "", new { @class = "small", @style = "color:red" })
                                 </div>
                             </div>
                             <div class="form-row">
@@ -255,7 +269,8 @@
         $(this).next('.custom-file-label').html(cleanFileName);
     })
 </script>
-@if (TempData["ServiceMessage"] != null)
+
+@if (TempData["ProjectMessage"] != null)
 {
     <script>
             const Toast = Swal.mixin({
@@ -271,8 +286,10 @@
             })
 
             Toast.fire({
-                icon: '@TempData["ServiceType"]',
-                title: '@TempData["ServiceMessage"]'
+                icon: '@TempData["ProjectType"]',
+                title: '@TempData["ProjectMessage"]'
             })
     </script>
 }
+
+

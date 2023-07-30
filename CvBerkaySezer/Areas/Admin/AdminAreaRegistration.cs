@@ -17,7 +17,7 @@ namespace CvBerkaySezer.Areas.Admin
             context.MapRoute(
     "Admin_default",
     "Admin/{controller}/{action}/{id}",
-    new { action = "Index", id = UrlParameter.Optional },
+    new { area = "Admin", controller = "Home", action = "Index", id = UrlParameter.Optional },
     new[] { "CvBerkaySezer.Areas.Admin.Controllers" }
 );
         }

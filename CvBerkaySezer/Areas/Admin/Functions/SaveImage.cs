@@ -13,7 +13,7 @@ namespace CvBerkaySezer.Areas.Admin.Functions
             string uzanti = Path.GetExtension(Request.Files[0].FileName);
             if (string.IsNullOrEmpty(uzanti)) return "";
 
-            string dosyaYolu = $"/images/Images/{dosyaAdi.Replace("/", "").Replace("-", "")}{uzanti}";
+            string dosyaYolu = $"/Content/Images/{dosyaAdi.Replace("/", "").Replace("-", "")}{uzanti}";
             Request.Files[0].SaveAs(Server.MapPath(dosyaYolu));
 
             return dosyaYolu;

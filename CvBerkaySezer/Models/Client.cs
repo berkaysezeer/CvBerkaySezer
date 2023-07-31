@@ -30,5 +30,7 @@ namespace CvBerkaySezer.Models
         public DateTime CreatedDate { get; set; }
 
         public bool IsDeleted { get; set; } = false;
+
+        public ICollection<Hosting> Hostings { get; set; }
     }
 }

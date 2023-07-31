@@ -64,8 +64,8 @@ namespace CvBerkaySezer.Areas.Admin.Controllers
 
                 Service service = new Service
                 {
-                    Definition = s.AddDefinition,
-                    Title = s.AddTitle,
+                    Definition = s.AddDefinition.Trim(),
+                    Title = s.AddTitle.Trim(),
                     ImageUrl = s.AddImageUrl
                 };
 

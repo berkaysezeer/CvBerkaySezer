@@ -52,7 +52,7 @@ namespace CvBerkaySezer.Areas.Admin.Controllers
             {
                 Skill skill = new Skill
                 {
-                    Title = s.AddTitle,
+                    Title = s.AddTitle.Trim(),
                     Rate = s.AddRate
                 };
 

@@ -14,13 +14,13 @@ namespace CvBerkaySezer.Areas.Admin.Controllers
         // GET: Admin/Message
         public ActionResult Index(string f)
         {
-            ViewBag.MessageCount = db.List(x => x.IsRead == false && x.IsDelete == false);
+            ViewBag.MessageCount = db.List(x => x.IsRead == false && x.IsDeleted == false);
 
             List<Contact> messages = new List<Contact>();
 
-            if (string.IsNullOrEmpty(f) || f == "okunmamislar") messages = db.List(x => x.IsRead == false && x.IsDelete == false);
-            else if (f == "okunanlar") messages = db.List(x => x.IsRead && x.IsDelete == false);
-            else if (f == "copkutusu") messages = db.List(x => x.IsDelete);
+            if (string.IsNullOrEmpty(f) || f == "okunmamislar") messages = db.List(x => x.IsRead == false && x.IsDeleted == false);
+            else if (f == "okunanlar") messages = db.List(x => x.IsRead && x.IsDeleted == false);
+            else if (f == "copkutusu") messages = db.List(x => x.IsDeleted);
 
             return View(messages);
         }
@@ -39,9 +39,9 @@ namespace CvBerkaySezer.Areas.Admin.Controllers
 
         public ActionResult MessageMenu()
         {
-            ViewBag.OkunmamisSayisi = db.List(x => x.IsRead == false && x.IsDelete == false).Count;
-            ViewBag.OkunmusSayisi = db.List(x => x.IsRead && x.IsDelete == false).Count;
-            ViewBag.SilinenMesajSayisi = db.List(x => x.IsDelete).Count;
+            ViewBag.OkunmamisSayisi = db.List(x => x.IsRead == false && x.IsDeleted == false).Count;
+            ViewBag.OkunmusSayisi = db.List(x => x.IsRead && x.IsDeleted == false).Count;
+            ViewBag.SilinenMesajSayisi = db.List(x => x.IsDeleted).Count;
 
             return PartialView();
         }
@@ -52,7 +52,7 @@ namespace CvBerkaySezer.Areas.Admin.Controllers
             var message = db.Find(x => x.Id == Id);
             try
             {
-                message.IsDelete = true;
+                message.IsDeleted = true;
                 db.Update();
 
                 TempData["ContactMessage"] = "Mesaj başarıyla silindi";

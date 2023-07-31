@@ -1,0 +1,265 @@
+﻿@using CvBerkaySezer.Models
+@model List<Client>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Müşteriler</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Admin</a></li>
+                    <li class="breadcrumb-item active">Müşteriler</li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table id="tblClients" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Ad Soyad</th>
+                                    <th>Telefon Numarası</th>
+                                    <th>E-posta</th>
+                                    <th>Oluşturulma Tarihi</th>
+                                    <th>Durum</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var client in Model)
+                                {
+                                    <tr>
+                                        <td>@client.FullName</td>
+                                        <td>@client.Telephone</td>
+                                        <td>@client.Email</td>
+                                        <td>@client.CreatedDate.ToString("dd.MM.yyyy HH:mm")</td>
+                                        <td>
+                                            @if (client.IsDeleted)
+                                            {
+                                                <span class="badge badge-danger">Silindi</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-success">Aktif</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            <a href="#" class="btn btn-outline-primary btn-sm btnMusteriDuzenle" data-id="@client.Id" data-musteri="@client.FullName" data-telefon="@client.Telephone" data-sil="@client.IsDeleted" data-eposta="@client.Email">Düzenle</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <a href="#" class="btn btn-primary" id="btnMusteriEkle">Müşteri Ekle</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Areas/Admin/Content/plugins/jquery/jquery.min.js"></script>
+<script>
+    $(function () {
+        $("#tblClients").DataTable({
+            order: [[3, 'asc']],
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
+            }
+        });
+
+    });</script>
+
+<script>
+    $(document).ready(function () {
+        $(document).on("click", ".btnMusteriDuzenle", OpenDuzenleModal);
+        $(document).on("click", "#btnMusteriEkle", OpenEkleModal);
+    });
+
+    function OpenEkleModal() {
+        $("#modalMusteriEkle").modal();
+    }
+
+    function OpenDuzenleModal() {
+        var musteriId = $(this).data("id");
+        var musteriTelefon = $(this).data("telefon");
+        var musteriEposta = $(this).data("eposta");
+        var musteriAd = $(this).data("musteri");
+        var musteriSil = $(this).data("sil");
+
+        if (musteriSil == "True") {
+            $('#IsDeleted').prop('checked', true);
+        } else {
+            $('#IsDeleted').prop('checked', false);
+        }
+
+        $('#Id').val(musteriId);
+        $('#Telephone').val(musteriTelefon);
+        $('#Email').val(musteriEposta);
+        $('#FullName').val(musteriAd);
+
+        $("#modalMusteriDuzenle").modal();
+    }
+
+</script>
+
+@*https://github.com/RobinHerbots/Inputmask/issues/958*@
+
+<div class="modal fade" id="modalMusteriEkle" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Müşteri Ekle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        @using (Html.BeginForm("Add", "Client", FormMethod.Post))
+                        {
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    @Html.Label("AddFullName", "Ad Soyad", new { @class = "small mb-1" })
+                                    @Html.TextBox("AddFullName", "", new { @class = "form-control py-3", @maxlength = "50" })
+                                    @Html.ValidationMessage("AddFullName", "", new { @class = "small", @style = "color:red" })
+                                </div>
+                                <div class="form-group col-md-12">
+                                    @Html.Label("AddTelephone", "Telefon", new { @class = "small mb-1" })
+                                    @Html.TextBox("AddTelephone", "", new { @class = "form-control py-3", @maxlength = "17" })
+                                    @Html.ValidationMessage("AddTelephone", "", new { @class = "small", @style = "color:red" })
+                                </div>
+                                <div class="form-group col-md-12">
+                                    @Html.Label("AddEmail", "E-posta", new { @class = "small mb-1" })
+                                    @Html.TextBox("AddEmail", "", new { @class = "form-control py-3", @maxlength = "30" })
+                                    @Html.ValidationMessage("AddEmail", "", new { @class = "small", @style = "color:red" })
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-12">
+                                    <div class="form-group mt-4 mb-0">
+                                        <button class="btn btn-primary btn-block" type="submit">Kaydet</button>
+                                    </div>
+                                </div>
+                            </div>}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalMusteriDuzenle" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Yetenek Düzenle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        @using (Html.BeginForm("Edit", "Client"))
+                        {
+                            @Html.Hidden("Id")
+
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    @Html.Label("FullName", "Ad Soyad", new { @class = "small mb-1" })
+                                    @Html.TextBox("FullName", "", new { @class = "form-control py-3", @maxlength = "50" })
+                                    @Html.ValidationMessage("FullName", "", new { @class = "small", @style = "color:red" })
+                                </div>
+                                <div class="form-group col-md-12">
+                                    @Html.Label("Telephone", "Telefon", new { @class = "small mb-1" })
+                                    @Html.TextBox("Telephone", "", new { @class = "form-control py-3", @maxlength = "17" })
+                                    @Html.ValidationMessage("Telephone", "", new { @class = "small", @style = "color:red" })
+                                </div>
+                                <div class="form-group col-md-12">
+                                    @Html.Label("Email", "E-posta", new { @class = "small mb-1" })
+                                    @Html.TextBox("Email", "", new { @class = "form-control py-3", @maxlength = "30" })
+                                    @Html.ValidationMessage("Email", "", new { @class = "small", @style = "color:red" })
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("IsDeleted", new { @class = "custom-control-input" })
+                                        @Html.Label("IsDeleted", "Sil", new { @class = "custom-control-label" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-12">
+                                    <div class="form-group mt-4 mb-0">
+                                        <button class="btn btn-primary btn-block" type="submit">Kaydet</button>
+                                    </div>
+                                </div>
+                            </div>}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/css/inputmask.min.css" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/bindings/inputmask.binding.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/inputmask/inputmask.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/inputmask/inputmask.phone.extensions.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/inputmask/jquery.inputmask.min.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function ($) {
+        $('#Telephone').inputmask("+\\90(999)999-99-99");
+        $('#AddTelephone').inputmask("+\\90(999)999-99-99");
+    });
+</script>
+
+@if (TempData["ClientMessage"] != null)
+{
+    <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                icon: '@TempData["ClientType"]',
+                title: '@TempData["ClientMessage"]'
+            })
+    </script>
+}
+

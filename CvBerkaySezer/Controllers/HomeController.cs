@@ -85,7 +85,6 @@ namespace CvBerkaySezer.Controllers
                 TempData["Target"] = "";
             }
 
-
             return RedirectToAction("Index");
         }
     }

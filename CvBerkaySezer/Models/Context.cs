@@ -15,5 +15,6 @@ namespace CvBerkaySezer.Models
         public DbSet<Skill> Skills { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Client> Clients { get; set; }
     }
 }

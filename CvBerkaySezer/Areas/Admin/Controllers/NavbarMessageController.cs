@@ -13,7 +13,7 @@ namespace CvBerkaySezer.Areas.Admin.Controllers
         // GET: Admin/NavbarMessage
         public ActionResult Index()
         {
-            var unreadMessage = db.List(x => x.IsRead == false && x.IsDelete == false);
+            var unreadMessage = db.List(x => x.IsRead == false && x.IsDeleted == false);
             ViewBag.MessageCount = unreadMessage.Count;
             var message = unreadMessage.OrderByDescending(x => x.Time).Take(5).ToList();
             return PartialView(message);

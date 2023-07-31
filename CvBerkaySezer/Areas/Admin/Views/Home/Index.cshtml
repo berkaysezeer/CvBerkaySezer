@@ -56,6 +56,20 @@
                 </div>
             </div>
             <div class="col-lg-3 col-6">
+                <div class="small-box bg-primary">
+                    <div class="inner">
+                        <h3>@ViewBag.Client</h3>
+                        <p>Müşteriler</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <a href="/Admin/Client" class="small-box-footer">Daha Fazla Bilgi <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-6">
                 <div class="small-box @(Convert.ToInt32(ViewBag.Message) > 0 ? "bg-success" : "") ">
                     <div class="inner">
                         <h3>@ViewBag.Message</h3>

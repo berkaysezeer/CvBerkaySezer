@@ -22,7 +22,10 @@ namespace CvBerkaySezer.Areas.Admin.Controllers
             ViewBag.Project = project.List(x => x.IsDeleted == false).Count;
 
             ContactRepository message = new ContactRepository();
-            ViewBag.Message = message.List(x => x.IsDelete == false && x.IsRead == false).Count;
+            ViewBag.Message = message.List(x => x.IsDeleted == false && x.IsRead == false).Count;
+
+            ClientRepository client = new ClientRepository();
+            ViewBag.Client = client.List(x => x.IsDeleted == false).Count;
 
             return View();
         }

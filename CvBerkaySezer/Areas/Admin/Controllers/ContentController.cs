@@ -32,9 +32,9 @@ namespace CvBerkaySezer.Areas.Admin.Controllers
                     if (!string.IsNullOrEmpty(image)) content.ImageUrl = image;
                 }
 
-                content.Title = c.Title;
-                content.Fullname = c.Fullname;
-                content.ContentParagrap = c.ContentParagrap;
+                content.Title = c.Title.Trim();
+                content.Fullname = c.Fullname.Trim();
+                content.ContentParagrap = c.ContentParagrap.Trim();
                 db.Update();
 
                 TempData["Message"] = "İçerik başarıyla güncellendi";

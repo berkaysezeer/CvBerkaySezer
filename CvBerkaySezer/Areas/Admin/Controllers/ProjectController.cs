@@ -34,7 +34,7 @@ namespace CvBerkaySezer.Areas.Admin.Controllers
                 }
 
                 project.IsDeleted = p.IsDeleted;
-                project.ProjectUrl = p.ProjectUrl;
+                project.ProjectUrl = p.ProjectUrl.Trim();
                 project.Title = p.Title.Trim();
                 project.Tag = p.Tag.Trim();
                 db.Update();
@@ -64,10 +64,10 @@ namespace CvBerkaySezer.Areas.Admin.Controllers
 
                 Project project = new Project
                 {
-                    Tag = p.AddTag,
-                    Title = p.AddTitle,
-                    ImageUrl = p.AddImageUrl,
-                    ProjectUrl = p.AddProjectUrl
+                    Tag = p.AddTag.Trim(),
+                    Title = p.AddTitle.Trim(),
+                    ImageUrl = p.AddImageUrl.Trim(),
+                    ProjectUrl = p.AddProjectUrl.Trim()
                 };
 
                 db.Add(project);

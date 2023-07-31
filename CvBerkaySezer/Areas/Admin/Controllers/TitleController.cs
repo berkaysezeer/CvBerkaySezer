@@ -26,8 +26,8 @@ namespace CvBerkaySezer.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 title.IsDeleted = t.IsDeleted;
-                title.Head = t.Head;
-                title.Content = t.Content;
+                title.Head = t.Head.Trim();
+                title.Content = t.Content.Trim();
                 db.Update();
             }
 

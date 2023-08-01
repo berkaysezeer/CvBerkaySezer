@@ -37,7 +37,7 @@
                                 @foreach (var client in Model)
                                 {
                                     <tr>
-                                        <td>@client.FullName</td>
+                                        <td><a href="/Admin/Client/Detail/@client.Id">@client.FullName</a></td>
                                         <td>@client.Telephone</td>
                                         <td>@client.Email</td>
                                         <td>@client.CreatedDate.ToString("dd.MM.yyyy HH:mm")</td>
@@ -52,7 +52,6 @@
                                             }
                                         </td>
                                         <td>
-                                            <a href="/Admin/Client/Detail/@client.Id" class="btn btn-outline-primary btn-sm">Detay</a>
                                             <a href="#" class="btn btn-outline-primary btn-sm btnMusteriDuzenle" data-id="@client.Id" data-musteri="@client.FullName" data-telefon="@client.Telephone" data-sil="@client.IsDeleted" data-eposta="@client.Email">Düzenle</a>
                                         </td>
                                     </tr>

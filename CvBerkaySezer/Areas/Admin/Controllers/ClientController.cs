@@ -119,6 +119,9 @@ namespace CvBerkaySezer.Areas.Admin.Controllers
             var client = db.Find(x => x.Id == Id);
             var hostings = hosting.List(x => x.ClientId == Id && x.IsDeleted == false);
 
+            ViewBag.HostingCount = hostings.Where(x => x.IsActive).Count();
+            ViewBag.DomainCount = 0;
+
             ClientViewModel clientView = new ClientViewModel()
             {
                 Hostings = hostings,
@@ -127,6 +130,59 @@ namespace CvBerkaySezer.Areas.Admin.Controllers
             };
 
             return View(clientView);
+        }
+
+        [HttpGet]
+        public ActionResult EditHosting(int Id)
+        {
+            ViewBag.Id = Id;
+            ViewBag.ServiceProviders = Functions.DropdownListItems.GetServiceProvider();
+            var h = hosting.Find(x => x.Id == Id);
+            return View(h);
+        }
+
+        [HttpPost]
+        public ActionResult EditHosting(Hosting h)
+        {
+            var host = hosting.Find(x => x.Id == h.Id);
+            h.ClientId = host.ClientId;
+
+            if (!ModelState.IsValid)
+            {
+                string errors = "";
+
+                foreach (ModelState modelState in ViewData.ModelState.Values)
+                {
+                    foreach (ModelError error in modelState.Errors)
+                    {
+                        errors += $"{error.ErrorMessage} - ";
+                    }
+                }
+
+                TempData["HostingEditMessage"] = "Hosting bilgisi düzenlenirken bir hata ile karşılaşıldı";
+                TempData["HostingEditType"] = "error";
+
+                ViewBag.Id = host.Id;
+                ViewBag.ServiceProviders = Functions.DropdownListItems.GetServiceProvider();
+                return View(host);
+            }
+            else
+            {
+                host.Description = h.Description;
+                host.ServiceProviderId = h.ServiceProviderId;
+                host.Title = h.Title;
+                host.UserName = h.UserName;
+                host.RegistrationDate = h.RegistrationDate;
+                host.NextPaymentDate = h.NextPaymentDate;
+                host.HostUrl = h.HostUrl;
+                host.Amount = h.Amount;
+                hosting.Update();
+
+                TempData["HostingMessage"] = "Hosting bilgisi başarıyla düzenlendi";
+                TempData["HostingType"] = "success";
+
+                return RedirectToAction("Detail", "Client", new { Id = host.ClientId });
+            }
         }
 
         [HttpGet]

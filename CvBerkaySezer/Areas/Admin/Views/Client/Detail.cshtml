@@ -19,8 +19,45 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">@Model.Client.FullName</h3>
+                    </div>
+                    <div class="card-body">
+                        <strong><i class="fas fa-book mr-1"></i> Telefon Numarası</strong>
+                        <p class="text-muted">
+                            @Model.Client.Telephone
+                        </p>
+                        <hr>
+                        <strong><i class="fas fa-map-marker-alt mr-1"></i> E-posta</strong>
+                        <p class="text-muted">@Model.Client.Email</p>
+                        <hr>
+                        <strong><i class="fas fa-pencil-alt mr-1"></i> Hosting Hizmeti</strong>
+                        <p class="text-muted">
+                            @ViewBag.HostingCount
+                        </p>
+                        <hr>
+                        <strong><i class="far fa-file-alt mr-1"></i> Domain Hizmeti</strong>
+                        <p class="text-muted">@ViewBag.DomainCount</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
                 <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <a href="/Admin/Client/AddHosting/@Model.Client.Id" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus"></i> Hosting Ekle</a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                     <div class="card-body">
                         <table id="tblClientHostings" class="table table-bordered table-striped">
                             <thead>
@@ -56,8 +93,8 @@
                                             }
                                         </td>
                                         <td>
-                                            <a href="#" class="btn btn-outline-primary btn-sm">Detay</a>
-                                            <a href="#" class="btn btn-outline-primary btn-sm">Düzenle</a>
+                                            <a href="#" class="btn btn-outline-primary btn-sm m-1">Detay</a>
+                                            <a href="/Admin/Client/EditHosting/@hosting.Id" class="btn btn-outline-primary btn-sm m-1">Düzenle</a>
                                         </td>
                                     </tr>
                                 }
@@ -65,11 +102,6 @@
                         </table>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <a href="/Admin/Client/AddHosting/@Model.Client.Id" class="btn btn-primary">Hosting Ekle</a>
             </div>
         </div>
     </div>

@@ -1403,6 +1403,7 @@
     <Content Include="Areas\Admin\Views\Client\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Client\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\Client\AddHosting.cshtml" />
+    <Content Include="Areas\Admin\Views\Client\EditHosting.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />

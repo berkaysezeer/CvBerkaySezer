@@ -20,7 +20,7 @@ namespace CvBerkaySezer.Areas.Admin.Controllers
 
         [HttpPost]
         public ActionResult Edit(Client c)
-       {
+        {
             var client = db.Find(x => x.Id == c.Id);
 
             if (ModelState.IsValid)
@@ -110,6 +110,55 @@ namespace CvBerkaySezer.Areas.Admin.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        HostingRepository hosting = new HostingRepository();
+
+        public ActionResult Detail(int Id)
+        {
+            var client = db.Find(x => x.Id == Id);
+            var hostings = hosting.List(x => x.ClientId == Id && x.IsDeleted == false);
+
+            ClientViewModel clientView = new ClientViewModel()
+            {
+                Hostings = hostings,
+                Client = client
+
+            };
+
+            return View(clientView);
+        }
+
+        [HttpGet]
+        public ActionResult AddHosting(int Id)
+        {
+            ViewBag.ClientId = Id;
+            ViewBag.ServiceProviders = Functions.DropdownListItems.GetServiceProvider();
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddHosting(Hosting h, int Id)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.ClientId = Id;
+                ViewBag.ServiceProviders = Functions.DropdownListItems.GetServiceProvider();
+
+                TempData["HostingMessage"] = "Hosting bilgisi eklenirken bir hata ile karşılaşıldı";
+                TempData["HostingType"] = "error";
+
+                return View();
+            }
+            else
+            {
+                hosting.Add(h);
+
+                TempData["HostingMessage"] = "Hosting bilgisi başarıyla eklendi";
+                TempData["HostingType"] = "success";
+
+                return RedirectToAction("Detail", "Client", new { Id = Id });
+            }
         }
     }
 }

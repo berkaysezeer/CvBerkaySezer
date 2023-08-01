@@ -1,0 +1,119 @@
+﻿@using CvBerkaySezer.Areas.Admin.ViewModels
+@model ClientViewModel
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Müşteri Detay</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Admin</a></li>
+                    <li class="breadcrumb-item active">Müşteri Detay</li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table id="tblClientHostings" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Hizmet Adı</th>
+                                    <th>Hizmet Açıklaması</th>
+                                    <th>Servis Sağlayıcısı</th>
+                                    <th>Kayıt Tarihi</th>
+                                    <th>Sıradaki Ödeme Tarihi</th>
+                                    <th>Tutar</th>
+                                    <th>Durum</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var hosting in Model.Hostings)
+                                {
+                                    <tr>
+                                        <td>@hosting.Title</td>
+                                        <td>@(hosting.Description.Length > 50 ? hosting.Description.Substring(0,47) + "..." : hosting.Description)</td>
+                                        <td><a href="@hosting.ServiceProvider.Url" target="_blank">@hosting.ServiceProvider.Name</a></td>
+                                        <td>@hosting.RegistrationDate.ToString("dd.MM.yyyy")</td>
+                                        <td>@hosting.NextPaymentDate.ToString("dd.MM.yyyy")</td>
+                                        <td>@hosting.Amount</td>
+                                        <td>
+                                            @if (!hosting.IsActive)
+                                            {
+                                                <span class="badge badge-danger">Aktif Değil</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-success">Aktif</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            <a href="#" class="btn btn-outline-primary btn-sm">Detay</a>
+                                            <a href="#" class="btn btn-outline-primary btn-sm">Düzenle</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <a href="/Admin/Client/AddHosting/@Model.Client.Id" class="btn btn-primary">Hosting Ekle</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/Areas/Admin/Content/plugins/jquery/jquery.min.js"></script>
+<script>
+    $(function () {
+        $("#tblClientHostings").DataTable({
+            order: [[0, 'asc']],
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
+            }
+        });
+
+    });</script>
+
+
+@if (TempData["HostingMessage"] != null)
+{
+    <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                icon: '@TempData["HostingType"]',
+                title: '@TempData["HostingMessage"]'
+            })
+    </script>
+}

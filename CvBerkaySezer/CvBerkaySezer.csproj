@@ -132,11 +132,13 @@
     <Compile Include="Areas\Admin\Controllers\TitleController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Areas\Admin\Functions\DataSecurity.cs" />
+    <Compile Include="Areas\Admin\Functions\DropdownListItems.cs" />
     <Compile Include="Areas\Admin\Functions\SaveImage.cs" />
     <Compile Include="Areas\Admin\ViewModels\AddClientViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\AddProjectViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\AddSkillViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\AddServiceViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ClientViewModel.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -1399,6 +1401,8 @@
     <Content Include="Areas\Admin\Content\Login\vendor\bootstrap\css\bootstrap.min.css.map" />
     <Content Include="Areas\Admin\Views\Project\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Client\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Client\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\Client\AddHosting.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />

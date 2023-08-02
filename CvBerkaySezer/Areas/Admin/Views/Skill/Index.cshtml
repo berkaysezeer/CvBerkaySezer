@@ -26,8 +26,7 @@
                             <thead>
                                 <tr>
                                     <th>Başlık</th>
-                                    <th>Oran</th>
-                                    <th>Oran</th>
+                                    <th>Görsel</th>
                                     <th>Durum</th>
                                     <th>İşlemler</th>
                                 </tr>
@@ -37,12 +36,7 @@
                                 {
                                     <tr>
                                         <td>@skill.Title</td>
-                                        <td>
-                                            <div class="progress progress-xs">
-                                                <div class="progress-bar bg-primary" style="width: @skill.Rate%"></div>
-                                            </div>
-                                        </td>
-                                        <td>@skill.Rate</td>
+                                        <td> <img width="35" height="35" src="@skill.ImageUrl" /></td>
                                         <td>
                                             @if (skill.IsDeleted)
                                             {
@@ -54,7 +48,7 @@
                                             }
                                         </td>
                                         <td>
-                                            <a href="#" class="btn btn-outline-primary btn-sm btnYetenekDuzenle" data-yetenekid="@skill.Id" data-baslik=" @skill.Title" data-sil="@skill.IsDeleted" data-oran="@skill.Rate">Düzenle</a>
+                                            <a href="#" class="btn btn-outline-primary btn-sm btnYetenekDuzenle" data-yetenekid="@skill.Id" data-baslik=" @skill.Title" data-sil="@skill.IsDeleted">Düzenle</a>
                                         </td>
                                     </tr>
                                 }
@@ -105,7 +99,6 @@
     function OpenDuzenleModal() {
         var yetenekId = $(this).data("yetenekid");
         var yetenekBaslik = $(this).data("baslik");
-        var yetenekOran = $(this).data("oran");
         var yetenekSil = $(this).data("sil");
 
         if (yetenekSil == "True") {
@@ -116,7 +109,6 @@
 
         $('#Id').val(yetenekId);
         $('#Title').val(yetenekBaslik);
-        $('#Rate').val(yetenekOran);
 
         $("#modalYetenekDuzenle").modal();
     }
@@ -135,7 +127,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        @using (Html.BeginForm("Add", "Skill", FormMethod.Post))
+                        @using (Html.BeginForm("Add", "Skill", FormMethod.Post, new { enctype = "multipart/form-data" }))
                         {
                             <div class="form-row">
                                 <div class="form-group col-md-12">
@@ -143,10 +135,19 @@
                                     @Html.TextBox("AddTitle", "", new { @class = "form-control py-3", @maxlength = "50" })
                                     @Html.ValidationMessage("AddTitle", "", new { @class = "small", @style = "color:red" })
                                 </div>
+                            </div>
+                            <div class="form-row">
                                 <div class="form-group col-md-12">
-                                    @Html.Label("AddRate", "Oran", new { @class = "small mb-1" })
-                                    @Html.TextBox("AddRate", "", new { type = "number", min = "1", max = "100", step = "1", @class = "form-control py-3" })
-                                    @Html.ValidationMessage("AddRate", "", new { @class = "small", @style = "color:red" })
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" accept=".jpg,.jpeg,.png,.svg" class="custom-file-input" id="AddImageUrl" name="AddImageUrl">
+                                            <label class="custom-file-label" for="AddImageUrl">Görsel Seç</label>
+                                        </div>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="">Yükle</span>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessage("AddImageUrl", "", new { @class = "small", @style = "color:red;" })
                                 </div>
                             </div>
                             <div class="form-row">
@@ -175,7 +176,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        @using (Html.BeginForm("Edit", "Skill"))
+                        @using (Html.BeginForm("Edit", "Skill", FormMethod.Post, new { enctype = "multipart/form-data" }))
                         {
                             @Html.Hidden("Id")
 
@@ -185,10 +186,19 @@
                                     @Html.TextBox("Title", "", new { @class = "form-control py-3", @maxlength = "50" })
                                     @Html.ValidationMessage("Title", "", new { @class = "small", @style = "color:red" })
                                 </div>
+                            </div>
+                            <div class="form-row">
                                 <div class="form-group col-md-12">
-                                    @Html.Label("Rate", "Oran", new { @class = "small mb-1" })
-                                    @Html.TextBox("Rate", "", new { type = "number", min = "1", max="100", step = "1", @class = "form-control py-3" })
-                                    @Html.ValidationMessage("Rate", "", new { @class = "small", @style = "color:red" })
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" accept=".jpg,.jpeg,.png,.svg" class="custom-file-input" id="ImageUrl" name="ImageUrl">
+                                            <label class="custom-file-label" for="ImageUrl">Görsel Seç</label>
+                                        </div>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="">Yükle</span>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessage("ImageUrl", "", new { @class = "small", @style = "color:red;" })
                                 </div>
                             </div>
                             <div class="form-row">
@@ -212,6 +222,20 @@
         </div>
     </div>
 </div>
+
+<script>
+    $('#ImageUrl').on('change', function () {
+        var fileName = $(this).val();
+        var cleanFileName = fileName.replace('C:\\fakepath\\', " ");
+        $(this).next('.custom-file-label').html(cleanFileName);
+    })
+
+    $('#AddImageUrl').on('change', function () {
+        var fileName = $(this).val();
+        var cleanFileName = fileName.replace('C:\\fakepath\\', " ");
+        $(this).next('.custom-file-label').html(cleanFileName);
+    })
+</script>
 
 @if (TempData["SkillMessage"] != null)
 {

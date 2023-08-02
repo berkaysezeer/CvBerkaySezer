@@ -1,7 +1,7 @@
 ﻿@using CvBerkaySezer.Models
 @model List<Skill>
 
-<div class="untree_co-section pb-0">
+<div class="untree_co-section pb-0" id="skills-section">
     <div class="container">
         <div class="row mb-4">
             <div class="col-lg-7 text-center mx-auto">
@@ -16,12 +16,12 @@
         <div class="row">
             @foreach (var skill in Model)
             {
-                <div class="col-6 col-sm-6 col-md-6 col-lg-3 text-center" data-aos="fade-up" data-aos-delay="0">
-                    <div class="progressbar" data-animate="false">
-                        <div class="circle" data-percent="@skill.Rate">
-                            <div class="number"></div>
-                            <p class="caption">@skill.Title</p>
+                <div class="col-6 col-sm-6 col-md-6 col-lg-3 mb-4">
+                    <div class="service text-center">
+                        <div class="gsap-reveal-hero mb-3">
+                            <span class="icon-service"><img src="@skill.ImageUrl" alt="Image" class="img-fluid"></span>
                         </div>
+                        <p class="gsap-reveal-hero">@skill.Title</p>
                     </div>
                 </div>
             }

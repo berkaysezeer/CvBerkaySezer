@@ -27,9 +27,14 @@ namespace CvBerkaySezer.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
+                if (Request.Files.Count > 0)
+                {
+                    string image = SaveImage.SaveSkillImage(Request, Server, s.Title.Replace(" ", "").Replace("#",""));
+                    if (!string.IsNullOrEmpty(image)) skill.ImageUrl = image;
+                }
+
                 skill.IsDeleted = s.IsDeleted;
                 skill.Title = s.Title.Trim();
-                skill.Rate = s.Rate;
                 db.Update();
 
                 TempData["SkillMessage"] = "Yetenek başarıyla düzenlendi";
@@ -50,10 +55,16 @@ namespace CvBerkaySezer.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (Request.Files.Count > 0)
+                {
+                    string image = SaveImage.SaveSkillImage(Request, Server, s.AddTitle.Replace(" ", "").Replace("#", ""));
+                    if (!string.IsNullOrEmpty(image)) s.AddImageUrl = image;
+                }
+
                 Skill skill = new Skill
                 {
                     Title = s.AddTitle.Trim(),
-                    Rate = s.AddRate
+                    ImageUrl = s.AddImageUrl
                 };
 
                 db.Add(skill);

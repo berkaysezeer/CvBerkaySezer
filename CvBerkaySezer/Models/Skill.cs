@@ -16,9 +16,12 @@ namespace CvBerkaySezer.Models
         [Required(ErrorMessage = "Başlık alanı boş geçilemez")]
         public string Title { get; set; }
 
-        [Required(ErrorMessage = "Başlık alanı boş geçilemez")]
         public int Rate { get; set; }
 
         public bool IsDeleted { get; set; } = false;
+
+        [Column(TypeName = "Varchar")]
+        [StringLength(256)]
+        public string ImageUrl { get; set; }
     }
 }

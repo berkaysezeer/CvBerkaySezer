@@ -32,5 +32,6 @@ namespace CvBerkaySezer.Models
         public bool IsDeleted { get; set; } = false;
 
         public ICollection<Hosting> Hostings { get; set; }
+        public ICollection<Domain> Domains { get; set; }
     }
 }

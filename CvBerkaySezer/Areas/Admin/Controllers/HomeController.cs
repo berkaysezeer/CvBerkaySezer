@@ -27,7 +27,13 @@ namespace CvBerkaySezer.Areas.Admin.Controllers
             ClientRepository client = new ClientRepository();
             ViewBag.Client = client.List(x => x.IsDeleted == false).Count;
 
-            return View();
+            HostingRepository hosting = new HostingRepository();
+			ViewBag.Hosting = hosting.List(x => x.IsDeleted == false && x.IsActive).Count;
+
+			DomainRepository domain = new DomainRepository();
+			ViewBag.Domain = domain.List(x => x.IsDeleted == false && x.IsActive).Count;
+
+			return View();
         }
     }
 }

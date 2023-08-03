@@ -9,6 +9,7 @@ namespace CvBerkaySezer.Areas.Admin.ViewModels
     public class ClientViewModel
     {
         public ICollection<Hosting> Hostings { get; set; }
+        public ICollection<Domain> Domains { get; set; }
         public Client Client { get; set; }
     }
 }

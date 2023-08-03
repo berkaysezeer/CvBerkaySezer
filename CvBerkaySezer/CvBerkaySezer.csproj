@@ -144,10 +144,23 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202308031904105_domain.cs" />
+    <Compile Include="Migrations\202308031904105_domain.designer.cs">
+      <DependentUpon>202308031904105_domain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202308031920481_nameservers.cs" />
+    <Compile Include="Migrations\202308031920481_nameservers.designer.cs">
+      <DependentUpon>202308031920481_nameservers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202308031952012_domain1.cs" />
+    <Compile Include="Migrations\202308031952012_domain1.designer.cs">
+      <DependentUpon>202308031952012_domain1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\Content.cs" />
+    <Compile Include="Models\Domain.cs" />
     <Compile Include="Models\Hosting.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\Context.cs" />
@@ -160,6 +173,7 @@
     <Compile Include="Repositories\ClientRepository.cs" />
     <Compile Include="Repositories\ContactRepository.cs" />
     <Compile Include="Repositories\ContentRepository.cs" />
+    <Compile Include="Repositories\DomainRepository.cs" />
     <Compile Include="Repositories\GenericRepository.cs" />
     <Compile Include="Repositories\HostingRepository.cs" />
     <Compile Include="Repositories\ProjectRepository.cs" />
@@ -1404,6 +1418,8 @@
     <Content Include="Areas\Admin\Views\Client\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\Client\AddHosting.cshtml" />
     <Content Include="Areas\Admin\Views\Client\EditHosting.cshtml" />
+    <Content Include="Areas\Admin\Views\Client\EditDomain.cshtml" />
+    <Content Include="Areas\Admin\Views\Client\AddDomain.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
@@ -1469,6 +1485,17 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202308031904105_domain.resx">
+      <DependentUpon>202308031904105_domain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202308031920481_nameservers.resx">
+      <DependentUpon>202308031920481_nameservers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202308031952012_domain1.resx">
+      <DependentUpon>202308031952012_domain1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

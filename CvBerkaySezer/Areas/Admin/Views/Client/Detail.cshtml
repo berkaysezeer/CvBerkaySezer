@@ -62,8 +62,8 @@
                         <table id="tblClientHostings" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Hizmet Adı</th>
-                                    <th>Hizmet Açıklaması</th>
+                                    <th>Başlık</th>
+                                    <th>Açıklama</th>
                                     <th>Servis Sağlayıcısı</th>
                                     <th>Kayıt Tarihi</th>
                                     <th>Sıradaki Ödeme Tarihi</th>
@@ -81,7 +81,7 @@
                                         <td><a href="@hosting.ServiceProvider.Url" target="_blank">@hosting.ServiceProvider.Name</a></td>
                                         <td>@hosting.RegistrationDate.ToString("dd.MM.yyyy")</td>
                                         <td>@hosting.NextPaymentDate.ToString("dd.MM.yyyy")</td>
-                                        <td>@hosting.Amount</td>
+                                        <td>@string.Format("{0:c}", hosting.Amount)</td>
                                         <td>
                                             @if (!hosting.IsActive)
                                             {
@@ -93,8 +93,68 @@
                                             }
                                         </td>
                                         <td>
-                                            <a href="#" class="btn btn-outline-primary btn-sm m-1">Detay</a>
-                                            <a href="/Admin/Client/EditHosting/@hosting.Id" class="btn btn-outline-primary btn-sm m-1">Düzenle</a>
+                                            <a href="#" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-folder-plus"></i></a>
+                                            <a href="/Admin/Client/EditHosting/@hosting.Id" class="btn btn-outline-primary btn-sm m-1"><i class="fa-solid fa-pen-to-square"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <a href="/Admin/Client/AddDomain/@Model.Client.Id" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus"></i> Domain Ekle</a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-body">
+                        <table id="tblClientDomains" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Başlık</th>
+                                    <th>Açıklama</th>
+                                    <th>Servis Sağlayıcısı</th>
+                                    <th>Alan Adı</th>
+                                    <th>Kayıt Tarihi</th>
+                                    <th>Sıradaki Ödeme Tarihi</th>
+                                    <th>Tutar</th>
+                                    <th>Durum</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var domain in Model.Domains)
+                                {
+                                    <tr>
+                                        <td>@domain.Title</td>
+                                        <td>@(domain.Description.Length > 50 ? domain.Description.Substring(0,47) + "..." : domain.Description)</td>
+                                        <td><a href="@domain.ServiceProvider.Url" target="_blank">@domain.ServiceProvider.Name</a></td>
+                                        <td>@domain.DomainName</td>
+                                        <td>@domain.RegistrationDate.ToString("dd.MM.yyyy")</td>
+                                        <td>@domain.NextPaymentDate.ToString("dd.MM.yyyy")</td>
+                                        <td>@string.Format("{0:c}", domain.Amount)</td>
+                                        <td>
+                                            @if (!domain.IsActive)
+                                            {
+                                                <span class="badge badge-danger">Aktif Değil</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-success">Aktif</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            <a href="#" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-folder-plus"></i></a>
+                                            <a href="/Admin/Client/EditDomain/@domain.Id" class="btn btn-outline-primary btn-sm m-1"><i class="fa-solid fa-pen-to-square"></i></a>
                                         </td>
                                     </tr>
                                 }
@@ -112,6 +172,24 @@
 <script>
     $(function () {
         $("#tblClientHostings").DataTable({
+            order: [[0, 'asc']],
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
+            }
+        });
+
+    });</script>
+
+<script>
+    $(function () {
+        $("#tblClientDomains").DataTable({
             order: [[0, 'asc']],
             "paging": true,
             "lengthChange": false,
@@ -146,6 +224,29 @@
             Toast.fire({
                 icon: '@TempData["HostingType"]',
                 title: '@TempData["HostingMessage"]'
+            })
+    </script>
+}
+
+
+@if (TempData["DomainMessage"] != null)
+{
+    <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                icon: '@TempData["DomainType"]',
+                title: '@TempData["DomainMessage"]'
             })
     </script>
 }

@@ -18,5 +18,6 @@ namespace CvBerkaySezer.Models
         public DbSet<Client> Clients { get; set; }
         public DbSet<ServiceProvider> ServiceProviders { get; set; }
         public DbSet<Hosting> Hostings { get; set; }
+        public DbSet<Domain> Domains { get; set; }
     }
 }
